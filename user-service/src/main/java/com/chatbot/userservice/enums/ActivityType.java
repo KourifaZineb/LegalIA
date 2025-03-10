@@ -1,0 +1,5 @@
+package com.chatbot.userservice.enums;
+
+public enum ActivityType {
+    CONNEXION, DÉCONNEXION, MISE_À_JOUR_DU_PROFIL, TÉLÉCHARGEMENT_DU_DOCUMENT, CONSULTATION_JURIDIQUE, CHANGEMENT_DE_LANGUE
+}
