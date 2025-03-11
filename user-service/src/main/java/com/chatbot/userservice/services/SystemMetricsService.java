@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface SystemMetricsService {
     SystemMetrics createMetric(SystemMetrics metric);
-    Optional<SystemMetrics> getMetricById(Integer id);
+    Optional<SystemMetrics> getMetricById(Long id);
     List<SystemMetrics> getAllMetrics();
     List<SystemMetrics> getMetricsByCategory(String category);
     List<SystemMetrics> getMetricsByDateRange(LocalDateTime start, LocalDateTime end);
     SystemMetrics updateMetric(SystemMetrics metric);
-    void deleteMetric(Integer id);
+    void deleteMetric(Long id);
     void logMetric(String name, Float value, String category);
 }

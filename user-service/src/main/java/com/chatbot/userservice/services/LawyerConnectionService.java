@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface LawyerConnectionService {
     LawyerConnections createConnection(LawyerConnections connection);
-    Optional<LawyerConnections> getConnectionById(Integer id);
-    List<LawyerConnections> getConnectionsByUserId(Integer userId);
-    List<LawyerConnections> getConnectionsByLawyerId(Integer lawyerId);
+    Optional<LawyerConnections> getConnectionById(Long id);
+    List<LawyerConnections> getConnectionsByUserId(Long userId);
+    List<LawyerConnections> getConnectionsByLawyerId(Long lawyerId);
     List<LawyerConnections> getConnectionsByStatus(String status);
     LawyerConnections updateConnection(LawyerConnections connection);
-    void deleteConnection(Integer id);
-    void acceptConnection(Integer connectionId);
-    void rejectConnection(Integer connectionId);
+    void deleteConnection(Long id);
+    void acceptConnection(Long connectionId);
+    void rejectConnection(Long connectionId);
 }
