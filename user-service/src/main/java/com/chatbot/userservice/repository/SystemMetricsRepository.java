@@ -1,3 +1,4 @@
+/*
 package com.chatbot.userservice.repository;
 
 import com.chatbot.userservice.entities.SystemMetrics;
@@ -13,3 +14,4 @@ public interface SystemMetricsRepository extends JpaRepository<SystemMetrics, Lo
     List<SystemMetrics> findByTimestampBetween(LocalDateTime start, LocalDateTime end);
     List<SystemMetrics> findByMetricName(String metricName);
 }
+*/

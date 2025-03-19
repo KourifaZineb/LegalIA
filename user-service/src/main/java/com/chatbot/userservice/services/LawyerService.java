@@ -1,20 +1,23 @@
 package com.chatbot.userservice.services;
 
+import com.chatbot.userservice.dtos.LawyerDTO;
 import com.chatbot.userservice.entities.Lawyer;
+import com.chatbot.userservice.enums.Speciality;
+import com.chatbot.userservice.enums.lawyerStatus;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface LawyerService {
-    Lawyer createLawyer(Lawyer lawyer);
-    Optional<Lawyer> getLawyerById(Long id);
-    Optional<Lawyer> getLawyerByEmail(String email);
-    List<Lawyer> getAllLawyers();
-    List<Lawyer> getLawyersBySpecialization(String specialization);
-    List<Lawyer> getLawyersByStatus(String status);
-    List<Lawyer> getLawyersByMinimumRating(Float minRating);
-    Lawyer updateLawyer(Lawyer lawyer);
+    LawyerDTO createLawyer(LawyerDTO lawyerDTO);
+    Optional<LawyerDTO> getLawyerById(Long id);
+    Optional<LawyerDTO> getLawyerByEmail(String email);
+    List<LawyerDTO> getAllLawyers();
+    List<LawyerDTO> getLawyersBySpecialization(Speciality specialization);
+    List<LawyerDTO> getLawyersByStatus(lawyerStatus status);
+    List<LawyerDTO> getLawyersByMinimumRating(Float minRating);
+    /*Lawyer updateLawyer(Lawyer lawyer);
     void deleteLawyer(Long id);
     boolean authenticateLawyer(String email, String password);
-    void updateLawyerAvailability(Long lawyerId, String status);
+    void updateLawyerAvailability(Long lawyerId, String status);*/
 }

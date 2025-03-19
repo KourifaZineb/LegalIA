@@ -18,11 +18,8 @@ public class UserDTO {
     private Language preferredLanguage;
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
-    private Set<UserActivityDTO> activities = new HashSet<>();
-    private Set<NotificationsDTO> notifications = new HashSet<>();
-    private Set<SystemMetricsDTO> metrics = new HashSet<>();
 
-    public UserDTO(Long userId, String name, String email, String password, String phoneNumber, userStatus status, Language preferredLanguage, LocalDateTime createdAt, LocalDateTime lastLogin, Set<UserActivityDTO> activities, Set<NotificationsDTO> notifications, Set<SystemMetricsDTO> metrics) {
+    public UserDTO(Long userId, String name, String email, String password, String phoneNumber, userStatus status, Language preferredLanguage, LocalDateTime createdAt, LocalDateTime lastLogin) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -32,9 +29,6 @@ public class UserDTO {
         this.preferredLanguage = preferredLanguage;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
-        this.activities = activities;
-        this.notifications = notifications;
-        this.metrics = metrics;
     }
 
     public UserDTO() {
@@ -112,33 +106,9 @@ public class UserDTO {
         this.lastLogin = lastLogin;
     }
 
-    public Set<UserActivityDTO> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(Set<UserActivityDTO> activities) {
-        this.activities = activities;
-    }
-
-    public Set<NotificationsDTO> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(Set<NotificationsDTO> notifications) {
-        this.notifications = notifications;
-    }
-
-    public Set<SystemMetricsDTO> getMetrics() {
-        return metrics;
-    }
-
-    public void setMetrics(Set<SystemMetricsDTO> metrics) {
-        this.metrics = metrics;
-    }
-
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDTO{" +
                 "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
@@ -148,9 +118,6 @@ public class UserDTO {
                 ", preferredLanguage=" + preferredLanguage +
                 ", createdAt=" + createdAt +
                 ", lastLogin=" + lastLogin +
-                ", activities=" + activities +
-                ", notifications=" + notifications +
-                ", metrics=" + metrics +
                 '}';
     }
 }

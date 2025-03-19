@@ -35,7 +35,7 @@ public class Lawyer {
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
@@ -43,7 +43,7 @@ public class Lawyer {
     private Set<LawyerConnections> connections = new HashSet<>();
 
     @OneToMany(mappedBy = "lawyer")
-    private Set<Notifications> notifications = new HashSet<>();
+    private Set<Notifications> notifications = new HashSet<>();*/
 
 }
 

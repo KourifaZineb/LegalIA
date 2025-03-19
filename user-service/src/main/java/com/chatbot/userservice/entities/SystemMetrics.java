@@ -21,6 +21,7 @@ public class SystemMetrics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long metricId;
     private String metricName;
+    @Column(name = "metric_value")
     private Float value;
     private LocalDateTime timestamp;
     private MetricCategory category;

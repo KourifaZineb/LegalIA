@@ -17,11 +17,7 @@ public class AdminDTO {
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 
-    private Set<SystemMetricsDTO> systemMetrics = new HashSet<>();
-
-    private Set<LawyerDTO> monitoredLawyers = new HashSet<>();
-
-    public AdminDTO(Long adminId, String name, String email, String password, Role role, LocalDateTime createdAt, LocalDateTime lastLogin, Set<SystemMetricsDTO> systemMetrics, Set<LawyerDTO> monitoredLawyers) {
+    public AdminDTO(Long adminId, String name, String email, String password, Role role, LocalDateTime createdAt, LocalDateTime lastLogin) {
         this.adminId = adminId;
         this.name = name;
         this.email = email;
@@ -29,8 +25,6 @@ public class AdminDTO {
         this.role = role;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
-        this.systemMetrics = systemMetrics;
-        this.monitoredLawyers = monitoredLawyers;
     }
 
     public AdminDTO() {
@@ -40,77 +34,61 @@ public class AdminDTO {
         return adminId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getLastLogin() {
-        return lastLogin;
-    }
-
-    public Set<SystemMetricsDTO> getSystemMetrics() {
-        return systemMetrics;
-    }
-
-    public Set<LawyerDTO> getMonitoredLawyers() {
-        return monitoredLawyers;
-    }
-
     public void setAdminId(Long adminId) {
         this.adminId = adminId;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
 
-    public void setSystemMetrics(Set<SystemMetricsDTO> systemMetrics) {
-        this.systemMetrics = systemMetrics;
-    }
-
-    public void setMonitoredLawyers(Set<LawyerDTO> monitoredLawyers) {
-        this.monitoredLawyers = monitoredLawyers;
-    }
-
     @Override
     public String toString() {
-        return "Admin{" +
+        return "AdminDTO{" +
                 "adminId=" + adminId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
@@ -118,8 +96,6 @@ public class AdminDTO {
                 ", role=" + role +
                 ", createdAt=" + createdAt +
                 ", lastLogin=" + lastLogin +
-                ", systemMetrics=" + systemMetrics +
-                ", monitoredLawyers=" + monitoredLawyers +
                 '}';
     }
 }

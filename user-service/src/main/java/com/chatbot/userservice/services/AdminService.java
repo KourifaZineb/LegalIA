@@ -9,13 +9,13 @@ import java.util.Optional;
 
 public interface AdminService {
     AdminDTO createAdmin(AdminDTO adminDTO);
-    Optional<AdminDTO> getAdminById(Long id);
     Optional<AdminDTO> getAdminByEmail(String email);
+    Optional<AdminDTO> getAdminById(Long id);
     List<AdminDTO> getAllAdmins();
-    List<AdminDTO> getAdminsByRole(String role);
-    AdminDTO updateAdmin(AdminDTO admin);
-    void deleteAdmin(Long id);
-    boolean authenticateAdmin(String email, String password);
+
     List<AdminDTO> searchAdminsByName(String name);
-    AdminDTO changeAdminRole(Long id, Role newRole);
+    void deleteAdmin(Long id);
+    AdminDTO updateAdmin(AdminDTO admin);
+    boolean authenticateAdmin(String email, String password);
+
 }

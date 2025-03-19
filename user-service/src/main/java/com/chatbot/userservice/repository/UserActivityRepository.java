@@ -1,3 +1,4 @@
+/*
 package com.chatbot.userservice.repository;
 
 import com.chatbot.userservice.entities.UserActivity;
@@ -14,3 +15,4 @@ public interface UserActivityRepository extends JpaRepository<UserActivity, Long
     List<UserActivity> findByActivityType(String activityType);
     List<UserActivity> findByTimestampBetween(LocalDateTime start, LocalDateTime end);
 }
+*/

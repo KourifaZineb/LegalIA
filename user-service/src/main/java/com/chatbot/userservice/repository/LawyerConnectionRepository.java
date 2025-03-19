@@ -1,3 +1,4 @@
+/*
 package com.chatbot.userservice.repository;
 
 import com.chatbot.userservice.entities.LawyerConnections;
@@ -14,3 +15,4 @@ public interface LawyerConnectionRepository extends JpaRepository<LawyerConnecti
     List<LawyerConnections> findByStatus(String status);
 
 }
+*/

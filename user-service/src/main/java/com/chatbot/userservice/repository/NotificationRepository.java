@@ -1,3 +1,4 @@
+/*
 package com.chatbot.userservice.repository;
 
 import com.chatbot.userservice.entities.Notifications;
@@ -14,3 +15,4 @@ public interface NotificationRepository extends JpaRepository<Notifications, Lon
     List<Notifications> findByIsRead(Boolean isRead);
     List<Notifications> findByNotificationType(String notificationType);
 }
+*/

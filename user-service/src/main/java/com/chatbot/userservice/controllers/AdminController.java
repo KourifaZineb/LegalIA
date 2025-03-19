@@ -18,11 +18,22 @@ import java.util.List;
 public class AdminController {
 
     private AdminService adminService;
-
+    @Autowired
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
     @PostMapping
     public ResponseEntity<AdminDTO> createAdmin(@Validated @RequestBody AdminDTO adminDTO) {
         AdminDTO createdAdmin = adminService.createAdmin(adminDTO);
         return new ResponseEntity<>(createdAdmin, HttpStatus.CREATED);
+
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<AdminDTO> getAdminByEmail(@PathVariable String email) {
+        return adminService.getAdminByEmail(email)
+                .map(admin -> new ResponseEntity<>(admin, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @GetMapping("/{id}")
     public ResponseEntity<AdminDTO> getAdminById(@PathVariable Long id) {
@@ -30,27 +41,25 @@ public class AdminController {
                 .map(admin -> new ResponseEntity<>(admin, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/email/{email}")
-    public ResponseEntity<AdminDTO> getAdminByEmail(@PathVariable String email) {
-        return adminService.getAdminByEmail(email)
-                .map(admin -> new ResponseEntity<>(admin, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+
     @GetMapping
     public ResponseEntity<List<AdminDTO>> getAllAdmins() {
         List<AdminDTO> admins = adminService.getAllAdmins();
         return new ResponseEntity<>(admins, HttpStatus.OK);
     }
-    @GetMapping("/role/{role}")
-    public ResponseEntity<List<AdminDTO>> getAdminsByRole(@PathVariable String role) {
-        List<AdminDTO> admins = adminService.getAdminsByRole(role);
-        return new ResponseEntity<>(admins, HttpStatus.OK);
-    }
-    @GetMapping("/search")
-    public ResponseEntity<List<AdminDTO>> searchAdminsByName(@RequestParam String name) {
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<AdminDTO>> searchAdminsByName(@PathVariable String name) {
         List<AdminDTO> admins = adminService.searchAdminsByName(name);
         return new ResponseEntity<>(admins, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
+        adminService.deleteAdmin(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long id, @Validated @RequestBody AdminDTO adminDTO) {
         adminDTO.setAdminId(id); // Assurer que l'ID est correctement défini
@@ -62,24 +71,10 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PatchMapping("/{id}/role")
-    public ResponseEntity<AdminDTO> changeAdminRole(@PathVariable Long id, @RequestParam Role role) {
-        AdminDTO updatedAdmin = adminService.changeAdminRole(id, role);
 
-        if (updatedAdmin != null) {
-            return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
-        adminService.deleteAdmin(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
     @PostMapping("/login")
     public ResponseEntity<String> authenticateAdmin(@RequestParam @Email(message = "Invalid email format") String email,
-            @RequestParam @NotBlank(message = "Password is required") String password) {
+                                                    @RequestParam @NotBlank(message = "Password is required") String password) {
 
         boolean authenticated = adminService.authenticateAdmin(email, password);
 

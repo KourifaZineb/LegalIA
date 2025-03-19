@@ -24,13 +24,13 @@ public class LawyerDTO {
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 
-    private AdminDTO admin;
+ /*   private AdminDTO admin;
 
     private Set<LawyerConnectionsDTO> connections = new HashSet<>();
 
-    private Set<NotificationsDTO> notifications = new HashSet<>();
+    private Set<NotificationsDTO> notifications = new HashSet<>();*/
 
-    public LawyerDTO(Long lawyerId, String name, String email, String password, String phoneNumber, Language languages, lawyerStatus status, Speciality specialization, double hourlyRate, double rating, LocalDateTime createdAt, LocalDateTime lastLogin, AdminDTO admin, Set<LawyerConnectionsDTO> connections, Set<NotificationsDTO> notifications) {
+    public LawyerDTO(Long lawyerId, String name, String email, String password, String phoneNumber, Language languages, lawyerStatus status, Speciality specialization, double hourlyRate, double rating, LocalDateTime createdAt, LocalDateTime lastLogin) {
         this.lawyerId = lawyerId;
         this.name = name;
         this.email = email;
@@ -43,9 +43,6 @@ public class LawyerDTO {
         this.rating = rating;
         this.createdAt = createdAt;
         this.lastLogin = lastLogin;
-        this.admin = admin;
-        this.connections = connections;
-        this.notifications = notifications;
     }
 
     public LawyerDTO() {
@@ -147,33 +144,9 @@ public class LawyerDTO {
         this.lastLogin = lastLogin;
     }
 
-    public AdminDTO getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(AdminDTO admin) {
-        this.admin = admin;
-    }
-
-    public Set<LawyerConnectionsDTO> getConnections() {
-        return connections;
-    }
-
-    public void setConnections(Set<LawyerConnectionsDTO> connections) {
-        this.connections = connections;
-    }
-
-    public Set<NotificationsDTO> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(Set<NotificationsDTO> notifications) {
-        this.notifications = notifications;
-    }
-
     @Override
     public String toString() {
-        return "Lawyer{" +
+        return "LawyerDTO{" +
                 "lawyerId=" + lawyerId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
@@ -186,9 +159,6 @@ public class LawyerDTO {
                 ", rating=" + rating +
                 ", createdAt=" + createdAt +
                 ", lastLogin=" + lastLogin +
-                ", admin=" + admin +
-                ", connections=" + connections +
-                ", notifications=" + notifications +
                 '}';
     }
 }
