@@ -2,6 +2,7 @@ package com.chatbot.userservice.controllers;
 
 import com.chatbot.userservice.dtos.AdminDTO;
 import com.chatbot.userservice.enums.Role;
+import com.chatbot.userservice.response.DefaultResponse;
 import com.chatbot.userservice.services.AdminService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -55,14 +56,14 @@ public class AdminController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
+    public ResponseEntity<DefaultResponse> deleteAdmin(@PathVariable Long id) {
         adminService.deleteAdmin(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(DefaultResponse.builder().returnCode("000").returnMessage("Success").build(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long id, @Validated @RequestBody AdminDTO adminDTO) {
-        adminDTO.setAdminId(id); // Assurer que l'ID est correctement défini
+        adminDTO.setAdminId(id);
         AdminDTO updatedAdmin = adminService.updateAdmin(adminDTO);
 
         if (updatedAdmin != null) {

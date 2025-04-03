@@ -14,7 +14,7 @@ public interface LawyerRepository extends JpaRepository<Lawyer, Long> {
 
     Optional<Lawyer> findByEmail(String email);
     List<Lawyer> findBySpecialization(Speciality specialization);
-/*List<Lawyer> findByRatingGreaterThanEqual(Float minRating);*/
+    List<Lawyer> findByRatingGreaterThanEqual(Float minRating);
     List<Lawyer> findByStatus(lawyerStatus status);
 
 }

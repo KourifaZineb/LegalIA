@@ -1,10 +1,9 @@
 package com.chatbot.userservice.controllers;
 
 import com.chatbot.userservice.dtos.LawyerDTO;
-import com.chatbot.userservice.dtos.UserDTO;
 import com.chatbot.userservice.enums.Speciality;
 import com.chatbot.userservice.enums.lawyerStatus;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.response.DefaultResponse;
 import com.chatbot.userservice.services.LawyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -62,4 +62,39 @@ public class LawyerController {
         List<LawyerDTO> lawyers = lawyerService.getLawyersByStatus(status);
         return new ResponseEntity<>(lawyers, HttpStatus.OK);
     }
+
+    @GetMapping("/by-min-rating")
+    public ResponseEntity<List<LawyerDTO>> getLawyersByMinimumRating(@RequestParam Float minRating) {
+        List<LawyerDTO> result = lawyerService.getLawyersByMinimumRating(minRating);
+        return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<LawyerDTO> updateLawyer(@PathVariable Long id, @RequestBody LawyerDTO lawyerDTO) {
+        return ResponseEntity.ok(lawyerService.updateLawyer(id, lawyerDTO));
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DefaultResponse> deleteLawyer(@PathVariable Long id) {
+        lawyerService.deleteLawyer(id);
+        return new ResponseEntity<>(DefaultResponse.builder().returnCode("000").returnMessage("Success").build(), HttpStatus.OK);
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<Boolean> authenticateLawyer(@RequestParam String email,
+                                                      @RequestParam String password) {
+        boolean isAuthenticated = lawyerService.authenticateLawyer(email, password);
+        return ResponseEntity.ok(isAuthenticated);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<DefaultResponse> updateLawyerAvailability(@PathVariable Long id,
+                                                                    @RequestBody Map<String, String> body) {
+        String status = body.get("status");
+        lawyerService.updateLawyerAvailability(id, status);
+        return new ResponseEntity<>(DefaultResponse.builder().returnCode("000").returnMessage("Success").build(), HttpStatus.OK);
+    }
+
+
 }

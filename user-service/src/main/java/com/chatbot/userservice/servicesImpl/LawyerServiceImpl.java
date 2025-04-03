@@ -85,7 +85,57 @@ public class LawyerServiceImpl implements LawyerService {
 
     @Override
     public List<LawyerDTO> getLawyersByMinimumRating(Float minRating) {
-        return null;
+        List<Lawyer> lawyers = lawyerRepository.findByRatingGreaterThanEqual(minRating);
+        return lawyers.stream()
+                .map(lawyerMapper::convertToDTO)
+                .collect(Collectors.toList());
     }
 
+    @Override
+    public LawyerDTO updateLawyer(Long id, LawyerDTO lawyerDTO) {
+        Lawyer lawyer = lawyerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Lawyer not found"));
+
+        // Tu peux aussi valider si lawyerDTO.getLawyerId() est cohérent avec l’id
+        lawyer.setName(lawyerDTO.getName());
+        lawyer.setEmail(lawyerDTO.getEmail());
+        lawyer.setPhoneNumber(lawyerDTO.getPhoneNumber());
+        lawyer.setLanguages(lawyerDTO.getLanguages());
+        lawyer.setStatus(lawyerDTO.getStatus());
+        lawyer.setSpecialization(lawyerDTO.getSpecialization());
+        lawyer.setHourlyRate(lawyerDTO.getHourlyRate());
+        lawyer.setRating(lawyerDTO.getRating());
+
+        Lawyer updated = lawyerRepository.save(lawyer);
+        return lawyerMapper.convertToDTO(updated);
+    }
+
+
+    @Override
+    public void deleteLawyer(Long id) {
+        if (!lawyerRepository.existsById(id)) {
+            throw new RuntimeException("Lawyer not found");
+        }
+        lawyerRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean authenticateLawyer(String email, String password) {
+        Optional<Lawyer> lawyerOpt = lawyerRepository.findByEmail(email);
+        return lawyerOpt.map(lawyer -> lawyer.getPassword().equals(password)).orElse(false);
+    }
+
+    @Override
+    public void updateLawyerAvailability(Long lawyerId, String status) {
+        Lawyer lawyer = lawyerRepository.findById(lawyerId)
+                .orElseThrow(() -> new RuntimeException("Lawyer not found"));
+
+        try {
+            lawyer.setStatus(lawyerStatus.valueOf(status.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid status: " + status);
+        }
+
+        lawyerRepository.save(lawyer);
+    }
 }

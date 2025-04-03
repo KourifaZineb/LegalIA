@@ -16,8 +16,8 @@ public interface LawyerService {
     List<LawyerDTO> getLawyersBySpecialization(Speciality specialization);
     List<LawyerDTO> getLawyersByStatus(lawyerStatus status);
     List<LawyerDTO> getLawyersByMinimumRating(Float minRating);
-    /*Lawyer updateLawyer(Lawyer lawyer);
+    LawyerDTO updateLawyer(Long id, LawyerDTO lawyerDTO);
     void deleteLawyer(Long id);
     boolean authenticateLawyer(String email, String password);
-    void updateLawyerAvailability(Long lawyerId, String status);*/
+    void updateLawyerAvailability(Long lawyerId, String status);
 }

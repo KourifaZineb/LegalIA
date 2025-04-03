@@ -54,15 +54,15 @@ public class UserServiceApplication {
 	CommandLineRunner commandLineRunner(UserRepository userRepository, LawyerRepository lawyerRepository){
 		return args -> {
 			userRepository.save(User.builder()
-					.email("zinebkourifa@gmail.com")
-					.name("zineb")
-					.status(userStatus.ACTIF)
-					.password("zineb12")
-					.preferredLanguage(Language.FRANÇAIS)
-					.phoneNumber("0639860383")
-					.createdAt(LocalDateTime.now())
-					.lastLogin(LocalDateTime.now())
-					.build());
+							.email("zinebkourifa@gmail.com")
+							.name("zineb")
+							.status(userStatus.ACTIF)
+							.password("zineb12")
+							.preferredLanguage(Language.FRANÇAIS)
+							.phoneNumber("0639860383")
+							.createdAt(LocalDateTime.now())
+							.lastLogin(LocalDateTime.now())
+							.build());
 			lawyerRepository.save(Lawyer.builder()
 							.email("salwamounji5@gmail.com")
 							.name("salwa mounji")
@@ -75,7 +75,15 @@ public class UserServiceApplication {
 							.status(lawyerStatus.DISPONIBLE)
 							.createdAt(LocalDateTime.now())
 							.lastLogin(LocalDateTime.now())
-					.build());
+							.build());
+			adminRepository.save(Admin.builder()
+							.email("zinebkourifa@gmail.com")
+							.name("zineb")
+							.password("zinebzineb")
+							.role(Role.SUPER_ADMIN)
+							.createdAt(LocalDateTime.now())
+							.lastLogin(LocalDateTime.now())
+							.build());
 		};
 	}
 }
