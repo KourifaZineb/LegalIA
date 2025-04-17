@@ -1,8 +1,9 @@
-package com.chatbot.userservice.servicesImpl;
+package com.chatbot.userservice.services.servicesImpl;
 
 import com.chatbot.userservice.dtos.AdminDTO;
 import com.chatbot.userservice.entities.Admin;
-import com.chatbot.userservice.enums.Role;
+
+import com.chatbot.userservice.entities.enums.Role;
 import com.chatbot.userservice.mappers.AdminMapper;
 import com.chatbot.userservice.repository.AdminRepository;
 import com.chatbot.userservice.services.AdminService;

@@ -1,6 +1,6 @@
 package com.chatbot.userservice.entities;
 
-import com.chatbot.userservice.enums.ActivityType;
+import com.chatbot.userservice.entities.enums.ActivityType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +18,7 @@ public class UserActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long activityId;
+    @Enumerated(EnumType.STRING)
     private ActivityType activityType;
     private LocalDateTime timestamp;
     private String details;

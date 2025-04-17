@@ -1,8 +1,8 @@
 package com.chatbot.userservice.repository;
 
 import com.chatbot.userservice.entities.Lawyer;
-import com.chatbot.userservice.enums.Speciality;
-import com.chatbot.userservice.enums.lawyerStatus;
+import com.chatbot.userservice.entities.enums.Speciality;
+import com.chatbot.userservice.entities.enums.lawyerStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.chatbot.userservice.dtos;
 
-import com.chatbot.userservice.enums.ActivityType;
+import com.chatbot.userservice.entities.enums.ActivityType;
 
 import java.time.LocalDateTime;
 

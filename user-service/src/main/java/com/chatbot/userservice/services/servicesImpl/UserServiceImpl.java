@@ -1,11 +1,9 @@
-package com.chatbot.userservice.servicesImpl;
+package com.chatbot.userservice.services.servicesImpl;
 
 import com.chatbot.userservice.dtos.UserDTO;
-import com.chatbot.userservice.entities.Admin;
 import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.Role;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.userStatus;
 import com.chatbot.userservice.mappers.UserMapper;
 import com.chatbot.userservice.repository.UserRepository;
 import com.chatbot.userservice.services.UserService;

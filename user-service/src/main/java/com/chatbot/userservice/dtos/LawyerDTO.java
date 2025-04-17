@@ -1,12 +1,10 @@
 package com.chatbot.userservice.dtos;
 
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.Speciality;
-import com.chatbot.userservice.enums.lawyerStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.Speciality;
+import com.chatbot.userservice.entities.enums.lawyerStatus;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class LawyerDTO {

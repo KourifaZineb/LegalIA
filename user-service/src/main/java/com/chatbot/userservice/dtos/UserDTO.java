@@ -1,11 +1,9 @@
 package com.chatbot.userservice.dtos;
 
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.userStatus;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class UserDTO {

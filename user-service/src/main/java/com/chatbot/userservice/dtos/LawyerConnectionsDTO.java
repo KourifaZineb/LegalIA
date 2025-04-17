@@ -1,6 +1,6 @@
 package com.chatbot.userservice.dtos;
 
-import com.chatbot.userservice.enums.ConnectionStatus;
+import com.chatbot.userservice.entities.enums.ConnectionStatus;
 
 import java.time.LocalDateTime;
 

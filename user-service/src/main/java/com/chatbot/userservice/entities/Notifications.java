@@ -1,6 +1,6 @@
 package com.chatbot.userservice.entities;
 
-import com.chatbot.userservice.enums.NotificationType;
+import com.chatbot.userservice.entities.enums.NotificationType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +21,7 @@ public class Notifications {
     private String content;
     private LocalDateTime timestamp;
     private Boolean isRead;
+    @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
     @ManyToOne

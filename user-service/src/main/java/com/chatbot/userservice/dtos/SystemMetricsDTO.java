@@ -1,6 +1,6 @@
 package com.chatbot.userservice.dtos;
 
-import com.chatbot.userservice.enums.MetricCategory;
+import com.chatbot.userservice.entities.enums.MetricCategory;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

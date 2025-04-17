@@ -1,4 +1,4 @@
-package com.chatbot.userservice.enums;
+package com.chatbot.userservice.entities.enums;
 
 public enum lawyerStatus {
     DISPONIBLE, OCCUPÉ, HORS_LIGNE, EN_CONGÉ

@@ -1,10 +1,8 @@
 package com.chatbot.userservice.dtos;
 
-import com.chatbot.userservice.enums.Role;
+import com.chatbot.userservice.entities.enums.Role;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class AdminDTO {

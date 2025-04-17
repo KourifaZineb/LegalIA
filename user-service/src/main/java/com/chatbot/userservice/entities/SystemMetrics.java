@@ -1,6 +1,6 @@
 package com.chatbot.userservice.entities;
 
-import com.chatbot.userservice.enums.MetricCategory;
+import com.chatbot.userservice.entities.enums.MetricCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +24,7 @@ public class SystemMetrics {
     @Column(name = "metric_value")
     private Float value;
     private LocalDateTime timestamp;
+    @Enumerated(EnumType.STRING)
     private MetricCategory category;
 
     @ManyToOne

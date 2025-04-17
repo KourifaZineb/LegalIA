@@ -1,9 +1,8 @@
 package com.chatbot.userservice.services;
 
 import com.chatbot.userservice.dtos.LawyerDTO;
-import com.chatbot.userservice.entities.Lawyer;
-import com.chatbot.userservice.enums.Speciality;
-import com.chatbot.userservice.enums.lawyerStatus;
+import com.chatbot.userservice.entities.enums.Speciality;
+import com.chatbot.userservice.entities.enums.lawyerStatus;
 
 import java.util.List;
 import java.util.Optional;

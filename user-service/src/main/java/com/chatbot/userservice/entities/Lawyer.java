@@ -1,8 +1,8 @@
 package com.chatbot.userservice.entities;
 
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.Speciality;
-import com.chatbot.userservice.enums.lawyerStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.Speciality;
+import com.chatbot.userservice.entities.enums.lawyerStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,8 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +27,7 @@ public class Lawyer {
     private String password;
     private String phoneNumber;
     private Language languages;
+    @Enumerated(EnumType.STRING)
     private lawyerStatus status;
     private Speciality specialization;
     private double hourlyRate;
@@ -35,15 +35,11 @@ public class Lawyer {
     private LocalDateTime createdAt;
     private LocalDateTime lastLogin;
 
-/*    @ManyToOne
-    @JoinColumn(name = "admin_id")
+    @ManyToOne
     private Admin admin;
 
     @OneToMany(mappedBy = "lawyer")
-    private Set<LawyerConnections> connections = new HashSet<>();
-
-    @OneToMany(mappedBy = "lawyer")
-    private Set<Notifications> notifications = new HashSet<>();*/
+    private Set<Notifications> notifications = new HashSet<>();
 
 }
 

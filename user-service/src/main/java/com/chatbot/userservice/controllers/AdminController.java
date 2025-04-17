@@ -1,12 +1,11 @@
 package com.chatbot.userservice.controllers;
 
 import com.chatbot.userservice.dtos.AdminDTO;
-import com.chatbot.userservice.enums.Role;
 import com.chatbot.userservice.response.DefaultResponse;
 import com.chatbot.userservice.services.AdminService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -16,13 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admins")
+@RequiredArgsConstructor
 public class AdminController {
 
     private AdminService adminService;
-    @Autowired
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
     @PostMapping
     public ResponseEntity<AdminDTO> createAdmin(@Validated @RequestBody AdminDTO adminDTO) {
         AdminDTO createdAdmin = adminService.createAdmin(adminDTO);

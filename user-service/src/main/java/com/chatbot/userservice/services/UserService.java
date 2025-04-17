@@ -1,9 +1,8 @@
 package com.chatbot.userservice.services;
 
 import com.chatbot.userservice.dtos.UserDTO;
-import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.userStatus;
 
 import java.util.List;
 import java.util.Optional;

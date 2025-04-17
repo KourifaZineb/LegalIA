@@ -1,13 +1,11 @@
 package com.chatbot.userservice.controllers;
 
-import com.chatbot.userservice.dtos.AdminDTO;
 import com.chatbot.userservice.dtos.UserDTO;
-import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.userStatus;
+import com.chatbot.userservice.response.DefaultResponse;
 import com.chatbot.userservice.services.UserService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,14 +17,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Validated @RequestBody UserDTO userDTO) {
@@ -62,13 +57,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<DefaultResponse> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(DefaultResponse.builder().returnCode("000").returnMessage("Success").build(), HttpStatus.OK);
     }
 
     @PutMapping("/language/{id}")
-    public ResponseEntity<Void> changeLanguage(@PathVariable Long id, @RequestBody Map<String, String> request) {
+    public ResponseEntity<DefaultResponse> changeLanguage(@PathVariable Long id, @RequestBody Map<String, String> request) {
         try {
             String languageStr = request.get("preferredLanguage");
             if (languageStr == null) {
@@ -78,7 +73,7 @@ public class UserController {
             // Vérifiez que la valeur correspond à une valeur enum valide
             Language language = Language.valueOf(languageStr);
             userService.changeUserLanguage(id, language);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(DefaultResponse.builder().returnCode("000").returnMessage("Success").build(), HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             // Si la conversion en enum échoue
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -93,12 +88,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<DefaultResponse> login(@RequestParam String email, @RequestParam String password) {
         boolean authenticated = userService.authenticateUser(email, password);
         if (authenticated) {
-            return new ResponseEntity<>("Login successful", HttpStatus.OK);
+            return new ResponseEntity<>(DefaultResponse.builder().returnCode("000").returnMessage("Success").build(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(DefaultResponse.builder().returnCode("111").returnMessage("Invalid credentials").build(), HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/language/{language}")

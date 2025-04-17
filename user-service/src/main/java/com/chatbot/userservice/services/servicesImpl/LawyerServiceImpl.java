@@ -1,12 +1,10 @@
-package com.chatbot.userservice.servicesImpl;
+package com.chatbot.userservice.services.servicesImpl;
 
 import com.chatbot.userservice.dtos.LawyerDTO;
-import com.chatbot.userservice.dtos.UserDTO;
 import com.chatbot.userservice.entities.Lawyer;
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.Speciality;
-import com.chatbot.userservice.enums.lawyerStatus;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.Speciality;
+import com.chatbot.userservice.entities.enums.lawyerStatus;
 import com.chatbot.userservice.mappers.LawyerMapper;
 import com.chatbot.userservice.repository.LawyerRepository;
 import com.chatbot.userservice.services.LawyerService;

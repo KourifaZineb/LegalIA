@@ -1,8 +1,6 @@
 package com.chatbot.userservice.services;
 
 import com.chatbot.userservice.dtos.AdminDTO;
-import com.chatbot.userservice.entities.Admin;
-import com.chatbot.userservice.enums.Role;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.chatbot.userservice.entities;
 
-import com.chatbot.userservice.enums.ConnectionStatus;
+import com.chatbot.userservice.entities.enums.ConnectionStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +19,7 @@ public class LawyerConnections {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long connectionId;
     private LocalDateTime requestDate;
+    @Enumerated(EnumType.STRING)
     private ConnectionStatus status;
     private String caseDescription;
 

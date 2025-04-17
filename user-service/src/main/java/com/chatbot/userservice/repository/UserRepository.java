@@ -1,8 +1,8 @@
 package com.chatbot.userservice.repository;
 
 import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.enums.Language;
-import com.chatbot.userservice.enums.userStatus;
+import com.chatbot.userservice.entities.enums.Language;
+import com.chatbot.userservice.entities.enums.userStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
