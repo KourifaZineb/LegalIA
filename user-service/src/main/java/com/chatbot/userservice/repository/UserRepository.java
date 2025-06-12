@@ -1,8 +1,8 @@
 package com.chatbot.userservice.repository;
 
-import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.entities.enums.Language;
-import com.chatbot.userservice.entities.enums.userStatus;
+import com.chatbot.commonlibrary.enums.UserStatus;
+import com.chatbot.userservice.model.User;
+import com.chatbot.commonlibrary.enums.Language;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,10 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    List<User> findByStatus(userStatus status);
     Optional<User> findByEmail(String email);
-
-    List<User> findByPreferredLanguage(Language language);
-    boolean existsByEmail(String email);
 }

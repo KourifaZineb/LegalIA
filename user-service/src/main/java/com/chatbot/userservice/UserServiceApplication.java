@@ -1,15 +1,12 @@
 package com.chatbot.userservice;
 
-import com.chatbot.userservice.entities.Admin;
-import com.chatbot.userservice.entities.Lawyer;
-import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.entities.enums.*;
-import com.chatbot.userservice.repository.AdminRepository;
-import com.chatbot.userservice.repository.LawyerRepository;
+import com.chatbot.commonlibrary.enums.Language;
+import com.chatbot.commonlibrary.enums.UserStatus;
+import com.chatbot.userservice.model.User;
 import com.chatbot.userservice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,18 +16,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @SpringBootApplication
-
+@RequiredArgsConstructor
 public class UserServiceApplication {
 
-	@Autowired
-	private Environment env;
-	@Autowired
-	private AdminRepository adminRepository;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+
+	private final Environment env;
+
+	private final PasswordEncoder passwordEncoder;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceApplication.class);
 
@@ -39,7 +36,7 @@ public class UserServiceApplication {
 		Environment env = app.run(args).getEnvironment();
 
 		LOGGER.info("Access URLs:\n----------------------------------------------------------\n\t" +
-						"Local: \t\thttp://127.0.0.1:{}/swagger-ui/#/\n\t" +
+						"Local: \t\thttp://localhost:{}/swagger-ui/index.html#/\n\t" +
 						"External: \thttp://{}:{}/swagger-ui/#/\n----------------------------------------------------------",
 
 				env.getProperty("server.port"),
@@ -49,38 +46,20 @@ public class UserServiceApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(UserRepository userRepository, LawyerRepository lawyerRepository){
+	CommandLineRunner commandLineRunner(UserRepository userRepository){
 		return args -> {
+			Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+
 			userRepository.save(User.builder()
 							.email("zinebkourifa@gmail.com")
 							.name("zineb")
-							.status(userStatus.ACTIF)
-							.password("zineb12")
-							.preferredLanguage(Language.FRANÇAIS)
+							.status(UserStatus.ACTIVE)
+							.password(passwordEncoder.encode("zineb12"))
+							.preferredLanguage(Language.FR)
 							.phoneNumber("0639860383")
-							.createdAt(LocalDateTime.now())
-							.lastLogin(LocalDateTime.now())
-							.build());
-			lawyerRepository.save(Lawyer.builder()
-							.email("salwamounji5@gmail.com")
-							.name("salwa mounji")
-							.phoneNumber("0788966320")
-							.password("salwasalwa")
-							.rating(5000.00)
-							.hourlyRate(200.00)
-							.specialization(Speciality.LOCATIF)
-							.languages(Language.ARABE)
-							.status(lawyerStatus.DISPONIBLE)
-							.createdAt(LocalDateTime.now())
-							.lastLogin(LocalDateTime.now())
-							.build());
-			adminRepository.save(Admin.builder()
-							.email("zinebkourifa@gmail.com")
-							.name("zineb")
-							.password("zinebzineb")
-							.role(Role.SUPER_ADMIN)
-							.createdAt(LocalDateTime.now())
-							.lastLogin(LocalDateTime.now())
+							.createdAt(instant)
+							.lastLogin(instant)
+							.solde(800.00)
 							.build());
 		};
 	}

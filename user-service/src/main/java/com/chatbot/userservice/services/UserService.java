@@ -1,22 +1,12 @@
 package com.chatbot.userservice.services;
 
-import com.chatbot.userservice.dtos.UserDTO;
-import com.chatbot.userservice.entities.enums.Language;
-import com.chatbot.userservice.entities.enums.userStatus;
-
+import com.chatbot.commonlibrary.dtos.UserDTO;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
-    UserDTO createUser(UserDTO userDTO);
-    Optional<UserDTO> getUserById(Long id);
+    UserDTO createUser(UserDTO dto);
+    UserDTO getUserById(Long id);
     List<UserDTO> getAllUsers();
-    List<UserDTO> getUsersByStatus(userStatus status);
-    UserDTO updateUser(UserDTO userDTO);
+    UserDTO updateUser(Long id, UserDTO dto);
     void deleteUser(Long id);
-    void changeUserLanguage(Long userId, Language language);
-    Optional<UserDTO> getUserByEmail(String email);
-    boolean authenticateUser(String email, String password);
-    List<UserDTO> searchByPreferredLanguage(Language language);
-    boolean existsByEmail(String email);
 }

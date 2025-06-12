@@ -1,148 +1,72 @@
 package com.chatbot.userservice.services.servicesImpl;
 
-import com.chatbot.userservice.dtos.UserDTO;
-import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.entities.enums.Language;
-import com.chatbot.userservice.entities.enums.userStatus;
-import com.chatbot.userservice.mappers.UserMapper;
+import com.chatbot.commonlibrary.dtos.UserDTO;
+import com.chatbot.commonlibrary.exception.NotFoundException;
+import com.chatbot.userservice.mapper.UserMapper;
+import com.chatbot.userservice.model.User;
 import com.chatbot.userservice.repository.UserRepository;
 import com.chatbot.userservice.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository repository;
+    private final UserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
-
-        User user = userMapper.convertToEntity(userDTO);
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setCreatedAt(LocalDateTime.now());
-        user.setLastLogin(LocalDateTime.now());
-        if (user.getStatus() == null) {
-            user.setStatus(userStatus.ACTIF);
+    public UserDTO createUser(UserDTO dto) {
+        // Encode le mot de passe si présent
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            System.out.println("debut de if");
+            System.out.println("Mot de passe avant encodage : " + dto.getPassword());
+            dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        } else {
+            System.out.println("debut de else");
+            throw new IllegalArgumentException("Le mot de passe ne peut pas être null ou vide");
         }
-        if (user.getPreferredLanguage() == null) {
-            user.setPreferredLanguage(Language.FRANÇAIS);
-        }
-
-        // Sauvegarder l'entité
-        User savedUser = userRepository.save(user);
-
-        // Conversion de l'entité sauvegardée en DTO
-        return userMapper.convertToDTO(savedUser);
+        System.out.println("hors de if");
+        System.out.println("Mot de passe après encodage : " + dto.getPassword());
+        User user = mapper.toEntity(dto);
+        Instant now = Instant.now();
+        user.setCreatedAt(now);
+        user.setLastLogin(now);
+        return mapper.toDto(repository.save(user));
     }
 
     @Override
-    public Optional<UserDTO> getUserById(Long id) {
-        return userRepository.findById(id)
-                .map(userMapper::convertToDTO);
+    public UserDTO getUserById(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
+
     @Override
     public List<UserDTO> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(userMapper::convertToDTO)
-                .collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::toDto).toList();
     }
 
     @Override
-    public List<UserDTO> getUsersByStatus(userStatus status) {
-        return userRepository.findByStatus(status).stream()
-                .map(userMapper::convertToDTO)
-                .collect(Collectors.toList());
-    }
+    public UserDTO updateUser(Long id, UserDTO dto) {
+        User existing = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
-    @Override
-    public UserDTO updateUser(UserDTO userDTO) {
-        Optional<User> existingUserOpt = userRepository.findById(userDTO.getUserId());
+        existing.setName(dto.getName());
+        existing.setPhoneNumber(dto.getPhoneNumber());
+        existing.setPreferredLanguage(dto.getPreferredLanguage());
+        existing.setStatus(dto.getStatus());
 
-        if (existingUserOpt.isPresent()) {
-            User existingUser = existingUserOpt.get();
-
-            LocalDateTime originalCreatedAt = existingUser.getCreatedAt();
-
-            // Mise à jour partielle de l'entité existante
-            userMapper.updateEntityFromDTO(userDTO, existingUser);
-            existingUser.setLastLogin(LocalDateTime.now());
-            existingUser.setCreatedAt(originalCreatedAt);
-            // Gestion spéciale du mot de passe
-            if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
-                existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            }
-
-            // Sauvegarder les modifications
-            User updateUser = userRepository.save(existingUser);
-
-            return userMapper.convertToDTO(updateUser);
-        }
-        return null;
+        return mapper.toDto(repository.save(existing));
     }
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        repository.deleteById(id);
     }
-
-    @Override
-    public void changeUserLanguage(Long userId, Language language) {
-        Optional<User> userOpt = userRepository.findById(userId);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            user.setPreferredLanguage(language);
-            userRepository.save(user);
-        }
-    }
-
-    @Override
-    public Optional<UserDTO> getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(userMapper::convertToDTO);
-    }
-
-    @Override
-    public boolean authenticateUser(String email, String password) {
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            boolean matches = passwordEncoder.matches(password, user.getPassword());
-            if (matches) {
-                user.setLastLogin(LocalDateTime.now());
-                userRepository.save(user);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public List<UserDTO> searchByPreferredLanguage(Language language) {
-        List<User> users = userRepository.findByPreferredLanguage(language);
-        return users.stream()
-                .map(userMapper::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-
 }
