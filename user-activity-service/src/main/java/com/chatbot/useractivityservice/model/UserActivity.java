@@ -1,10 +1,10 @@
-package com.chatbot.useractivityservice.entities;
+package com.chatbot.useractivityservice.model;
 
-import com.chatbot.useractivityservice.entities.enums.ActivityType;
+import com.chatbot.commonlibrary.enums.ActivityType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -17,10 +17,18 @@ public class UserActivity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long activityId;
+    private Long id;
+
+    @Column(nullable = false)
+    private Long userId;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "activity_type", nullable = false)
     private ActivityType activityType;
-    private LocalDateTime timestamp;
+
+    @Column(columnDefinition = "TEXT")
     private String details;
 
+    @Column(nullable = false)
+    private Instant timestamp = Instant.now();
 }

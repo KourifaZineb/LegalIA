@@ -1,5 +1,11 @@
-package com.chatbot.commonlibrary.enumm;
+package com.chatbot.commonlibrary.enums;
 
 public enum ActivityType {
-    LOGIN, LOGOUT, PROFILE_UPDATE, DOCUMENT_DOWNLOAD, LEGAL_CONSULTATION, LANGUAGE_CHANGE
+    LOGIN,
+    LOGOUT,
+    DOCUMENT_UPLOAD,
+    DOCUMENT_ANALYSIS,
+    CONNECTION_REQUEST,
+    MESSAGE_SENT,
+    NOTIFICATION_READ
 }

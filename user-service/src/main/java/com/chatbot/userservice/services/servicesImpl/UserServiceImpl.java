@@ -57,11 +57,21 @@ public class UserServiceImpl implements UserService {
         User existing = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        existing.setName(dto.getName());
-        existing.setPhoneNumber(dto.getPhoneNumber());
-        existing.setPreferredLanguage(dto.getPreferredLanguage());
-        existing.setStatus(dto.getStatus());
-
+        if (dto.getName() != null) {
+            existing.setName(dto.getName());
+        }
+        if (dto.getPhoneNumber() != null) {
+            existing.setPhoneNumber(dto.getPhoneNumber());
+        }
+        if (dto.getPreferredLanguage() != null) {
+            existing.setPreferredLanguage(dto.getPreferredLanguage());
+        }
+        if (dto.getStatus() != null) {
+            existing.setStatus(dto.getStatus());
+        }
+        if (dto.getSolde() != null) {
+            existing.setSolde(dto.getSolde());
+        }
         return mapper.toDto(repository.save(existing));
     }
 

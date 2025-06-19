@@ -1,22 +1,17 @@
-package com.ged.lawyerservice.services;
+package com.chatbot.lawyerservice.services;
 
-import com.ged.lawyerservice.dtos.LawyerDTO;
-import com.ged.lawyerservice.entities.enums.LawyerStatus;
-import com.ged.lawyerservice.entities.enums.Speciality;
+import com.chatbot.commonlibrary.dtos.LawyerDTO;
+import com.chatbot.commonlibrary.enums.LawyerStatus;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface LawyerService {
-    LawyerDTO createLawyer(LawyerDTO lawyerDTO);
-    Optional<LawyerDTO> getLawyerById(Long id);
-    Optional<LawyerDTO> getLawyerByEmail(String email);
+    LawyerDTO createLawyer(LawyerDTO dto);
+    LawyerDTO getLawyerById(Long id);
     List<LawyerDTO> getAllLawyers();
-    List<LawyerDTO> getLawyersBySpecialization(Speciality specialization);
     List<LawyerDTO> getLawyersByStatus(LawyerStatus status);
-    List<LawyerDTO> getLawyersByMinimumRating(Float minRating);
-    LawyerDTO updateLawyer(Long id, LawyerDTO lawyerDTO);
+    LawyerDTO updateLawyer(Long id, LawyerDTO dto);
     void deleteLawyer(Long id);
-    boolean authenticateLawyer(String email, String password);
-    void updateLawyerAvailability(Long lawyerId, String status);
+
 }

@@ -1,4 +1,14 @@
-package com.chatbot.commonlibrary.enumm;
+package com.chatbot.commonlibrary.enums;
 
 public enum NotificationType {
+    CONNECTION_REQUEST,
+    CONNECTION_ACCEPTED,
+    CONNECTION_REJECTED,
+    NEW_MESSAGE,
+    SYSTEM_NOTIFICATION,
+    SYSTEM_ALERT,
+    LAWYER_REPLY,
+    DOCUMENT_ANALYSIS_COMPLETE,
+    DOCUMENT_GENERATED,
+    BALANCE_UPDATED
 }

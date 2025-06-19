@@ -1,70 +1,88 @@
-package com.chatbot.userservice.services.servicesImpl;
+package com.chatbot.useractivityservice.services.servicesImpl;
 
-import com.chatbot.userservice.entities.User;
-import com.chatbot.userservice.entities.UserActivity;
-import com.chatbot.userservice.entities.enums.ActivityType;
-import com.chatbot.userservice.repository.UserActivityRepository;
-import com.chatbot.userservice.repository.UserRepository;
-import com.chatbot.userservice.dtos.request.LogActivityRequest;
-import com.chatbot.userservice.services.UserActivityService;
+import com.chatbot.commonlibrary.dtos.UserActivityDTO;
+import com.chatbot.useractivityservice.config.UserFeignClient;
+import com.chatbot.useractivityservice.mapper.UserActivityMapper;
+import com.chatbot.useractivityservice.model.UserActivity;
+import com.chatbot.useractivityservice.repository.UserActivityRepository;
+import com.chatbot.useractivityservice.services.UserActivityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserActivityServiceImpl implements UserActivityService {
-    private final UserActivityRepository userActivityRepository;
-    private final UserRepository userRepository;
+
+    private final UserActivityRepository repository;
+    private final UserActivityMapper mapper;
+    private final UserFeignClient userClient;
+
+/*
+    @Override
+    public UserActivityDTO logActivity(UserActivityDTO dto) {
+        UserActivity entity = mapper.toEntity(dto);
+        entity.setTimestamp(Instant.now());
+        UserActivityDTO savedDto = mapper.toDto(repository.save(entity));
+        savedDto.setUserDTO(userClient.getUserById(entity.getUserId()));
+        return savedDto;
+    }
+*/
+@Override
+public UserActivityDTO logActivity(UserActivityDTO dto) {
+    // ⚠️ Ne surtout pas garder l'ID si présent dans le DTO
+    dto.setId(null); // <-- indispensable pour forcer l'INSERT
+
+    // Mapping manuel (évite que MapStruct copie un ancien ID)
+    UserActivity entity = new UserActivity();
+    entity.setUserId(dto.getUserId());
+    entity.setActivityType(dto.getActivityType());
+    entity.setDetails(dto.getDetails());
+    entity.setTimestamp(Instant.now());
+
+    // Sauvegarde (insert)
+    UserActivity saved = repository.save(entity);
+
+    // Préparation réponse
+    UserActivityDTO savedDto = new UserActivityDTO();
+    savedDto.setId(saved.getId());
+    savedDto.setUserId(saved.getUserId());
+    savedDto.setActivityType(saved.getActivityType());
+    savedDto.setDetails(saved.getDetails());
+    savedDto.setTimestamp(saved.getTimestamp());
+
+    // Enrichir avec UserDTO (via Feign client)
+    savedDto.setUserDTO(userClient.getUserById(saved.getUserId()));
+
+    return savedDto;
+}
+
 
     @Override
-    public UserActivity createActivity(UserActivity activity) {
-        // 1. Récupérer le userId
-        Long userId = activity.getUser().getUserId();
-
-        // 2. Charger le User existant depuis la base
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'id: " + userId));
-
-        // 3. Rattacher le user existant
-        activity.setUser(user);
-
-        // 4. Sauvegarder l'activité
-        return userActivityRepository.save(activity);
+    public List<UserActivityDTO> getActivitiesByUserId(Long userId) {
+        return repository.findByUserId(userId)
+                .stream()
+                .map(activity -> {
+                    UserActivityDTO dto = mapper.toDto(activity);
+                    dto.setUserDTO(userClient.getUserById(userId));
+                    return dto;
+                })
+                .toList();
     }
+
 
     @Override
-    public Optional<UserActivity> getActivityById(Long id) {
-        return userActivityRepository.findById(id);
+    public List<UserActivityDTO> getAllActivities() {
+        return repository.findAll()
+                .stream()
+                .map(activity -> {
+                    UserActivityDTO dto = mapper.toDto(activity);
+                    dto.setUserDTO(userClient.getUserById(activity.getUserId()));
+                    return dto;
+                })
+                .toList();
     }
-
-    @Override
-    public List<UserActivity> getActivitiesByUserId(Long userId) {
-        return userActivityRepository.findByUser_userId(userId);
-    }
-
-    @Override
-    public List<UserActivity> getActivitiesByType(ActivityType type) {
-        return userActivityRepository.findByActivityType(type);
-    }
-
-    @Override
-    public List<UserActivity> getActivitiesByDateRange(LocalDateTime start, LocalDateTime end) {
-        return userActivityRepository.findByTimestampBetween(start, end);
-    }
-
-    @Override
-    public UserActivity updateActivity(UserActivity activity) {
-        return userActivityRepository.save(activity);
-    }
-
-    @Override
-    public void deleteActivity(Long id) {
-        userActivityRepository.deleteById(id);
-    }
-
 
 }

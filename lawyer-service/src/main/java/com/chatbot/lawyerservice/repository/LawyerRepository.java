@@ -1,8 +1,7 @@
-package com.ged.lawyerservice.repository;
+package com.chatbot.lawyerservice.repository;
 
-import com.ged.lawyerservice.entities.Lawyer;
-import com.ged.lawyerservice.entities.enums.LawyerStatus;
-import com.ged.lawyerservice.entities.enums.Speciality;
+import com.chatbot.commonlibrary.enums.LawyerStatus;
+import com.chatbot.lawyerservice.model.Lawyer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,8 +12,7 @@ import java.util.Optional;
 public interface LawyerRepository extends JpaRepository<Lawyer, Long> {
 
     Optional<Lawyer> findByEmail(String email);
-    List<Lawyer> findBySpecialization(Speciality specialization);
-    List<Lawyer> findByRatingGreaterThanEqual(Float minRating);
     List<Lawyer> findByStatus(LawyerStatus status);
+    //Lawyer findByLawyerId(Long id);
 
 }

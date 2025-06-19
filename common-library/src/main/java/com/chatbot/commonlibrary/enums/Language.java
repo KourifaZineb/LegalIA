@@ -1,4 +1,5 @@
-package com.chatbot.commonlibrary.enumm;
+package com.chatbot.commonlibrary.enums;
 
 public enum Language {
+    FR, AR
 }

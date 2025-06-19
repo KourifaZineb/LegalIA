@@ -1,12 +1,8 @@
 package com.chatbot.commonlibrary.enums;
 
-public enum Status {
+public enum UserStatus {
     ACTIVE,
     INACTIVE,
-    AVAILABLE,
-    UNAVAILABLE,
-    PENDING,
-    ACCEPTED,
-    REJECTED,
-    BLOCKED
+    SUSPENDED,
+    DELETED
 }

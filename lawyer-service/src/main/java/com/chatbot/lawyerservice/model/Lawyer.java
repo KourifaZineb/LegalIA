@@ -1,43 +1,61 @@
-package com.chatbot.lawyerservice.entities;
+package com.chatbot.lawyerservice.model;
 
-import com.chatbot.lawyerservice.entities.enums.Language;
-import com.chatbot.lawyerservice.entities.enums.LawyerStatus;
-import com.ged.lawyerservice.entities.enums.Speciality;
+import com.chatbot.commonlibrary.enums.Language;
+import com.chatbot.commonlibrary.enums.LawyerStatus;
+import com.chatbot.commonlibrary.enums.Specialization;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.util.List;
 
 @Entity
-@Data
-@Builder
+@Table(name = "lawyers")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "lawyers")
+@Builder
 public class Lawyer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long lawyerId;
+    private Long id;
+
+    @Column(nullable = false)
     private String name;
-    @Column(unique = true)
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
-    private Language languages;
+
+    private String adresse;
+
     @Enumerated(EnumType.STRING)
+    private Specialization specialization;
+
+    private Double solde;
+
+    @CollectionTable(name = "lawyer_languages", joinColumns = @JoinColumn(name = "lawyer_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "language")
+    private Language languages;
+
+    @Column(name = "hourly_rate")
+    private Double hourlyRate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private LawyerStatus status;
-    private Speciality specialization;
-    private double hourlyRate;
-    private double rating;
-    private LocalDateTime createdAt;
-    private LocalDateTime lastLogin;
 
-/*    @ManyToOne
-    private Admin admin;*/
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
 
+    @Column(name = "last_login")
+    private Instant lastLogin;
 }
-
