@@ -1,6 +1,7 @@
 package com.chatbot.commonlibrary.dtos;
 
 import com.chatbot.commonlibrary.enums.Language;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.enums.UserStatus;
 import lombok.*;
 
@@ -20,7 +21,7 @@ public class UserDTO {
     private String phoneNumber;
     private Language preferredLanguage;
     private UserStatus status;
-    private Double solde;
+    private Role role;
     private Instant createdAt;
     private Instant lastLogin;
 }

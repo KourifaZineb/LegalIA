@@ -2,7 +2,5 @@ package com.chatbot.commonlibrary.enums;
 
 public enum UserStatus {
     ACTIVE,
-    INACTIVE,
-    SUSPENDED,
-    DELETED
+    INACTIVE
 }

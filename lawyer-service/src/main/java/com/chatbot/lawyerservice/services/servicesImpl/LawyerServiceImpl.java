@@ -2,6 +2,7 @@ package com.chatbot.lawyerservice.services.servicesImpl;
 
 import com.chatbot.commonlibrary.dtos.LawyerDTO;
 import com.chatbot.commonlibrary.enums.LawyerStatus;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.exception.NotFoundException;
 import com.chatbot.lawyerservice.mapper.LawyerMapper;
 import com.chatbot.lawyerservice.repository.LawyerRepository;
@@ -27,6 +28,7 @@ public class LawyerServiceImpl implements LawyerService {
         System.out.println("Mot de passe reçu : " + dto.getPassword());
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         lawyer.setPassword(encodedPassword);
+        lawyer.setRole(Role.LAWYER);
         System.out.println("Mot de passe encodé : " + encodedPassword);
         lawyer.setCreatedAt(Instant.now());
         lawyer.setLastLogin(Instant.now());
@@ -57,13 +59,12 @@ public class LawyerServiceImpl implements LawyerService {
 
         if (dto.getName() != null) existing.setName(dto.getName());
         if (dto.getEmail() != null) existing.setEmail(dto.getEmail());
-        if (dto.getSolde() != null) existing.setSolde(dto.getSolde());
         if (dto.getPhoneNumber() != null) existing.setPhoneNumber(dto.getPhoneNumber());
         if (dto.getAdresse() != null) existing.setAdresse(dto.getAdresse());
         if (dto.getStatus() != null) existing.setStatus(dto.getStatus());
         if (dto.getSpecialization() != null) existing.setSpecialization(dto.getSpecialization());
         if (dto.getLanguages() != null) existing.setLanguages(dto.getLanguages());
-        if (dto.getHourlyRate() != null) existing.setHourlyRate(dto.getHourlyRate());
+        if (dto.getRole() != null) existing.setRole(dto.getRole());
 
         return mapper.toDto(repository.save(existing));
     }

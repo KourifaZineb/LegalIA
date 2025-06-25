@@ -2,6 +2,7 @@ package com.chatbot.commonlibrary.dtos;
 
 import com.chatbot.commonlibrary.enums.Language;
 import com.chatbot.commonlibrary.enums.LawyerStatus;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.enums.Specialization;
 import lombok.*;
 
@@ -17,9 +18,8 @@ public class LawyerDTO {
     private String phoneNumber;
     private String adresse;
     private Specialization specialization;
-    private Double solde;
     private Language languages;
-    private Double hourlyRate;
+    private Role role;
     private LawyerStatus status;
     private Instant createdAt;
     private Instant lastLogin;

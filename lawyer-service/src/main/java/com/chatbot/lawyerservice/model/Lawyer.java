@@ -2,6 +2,7 @@ package com.chatbot.lawyerservice.model;
 
 import com.chatbot.commonlibrary.enums.Language;
 import com.chatbot.commonlibrary.enums.LawyerStatus;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.enums.Specialization;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,19 +40,19 @@ public class Lawyer {
     @Enumerated(EnumType.STRING)
     private Specialization specialization;
 
-    private Double solde;
 
     @CollectionTable(name = "lawyer_languages", joinColumns = @JoinColumn(name = "lawyer_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "language")
     private Language languages;
 
-    @Column(name = "hourly_rate")
-    private Double hourlyRate;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LawyerStatus status;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

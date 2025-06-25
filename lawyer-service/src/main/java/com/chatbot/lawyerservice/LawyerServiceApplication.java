@@ -2,6 +2,7 @@ package com.chatbot.lawyerservice;
 
 import com.chatbot.commonlibrary.enums.Language;
 import com.chatbot.commonlibrary.enums.LawyerStatus;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.enums.Specialization;
 import com.chatbot.lawyerservice.model.Lawyer;
 import com.chatbot.lawyerservice.repository.LawyerRepository;
@@ -56,11 +57,10 @@ public class LawyerServiceApplication {
                     .name("salwa mounji")
                     .phoneNumber("0788966320")
                     .password(passwordEncoder.encode("salwasalwa"))
-                    .hourlyRate(200.00)
-                    .solde(7900.00)
                     .adresse("Casablanca, Morocco")
                     .specialization(Specialization.FAMILY_LAW)
                     .languages(Language.AR)
+                    .role(Role.LAWYER)
                     .status(LawyerStatus.AVAILABLE)
                     .createdAt(instant)
                     .lastLogin(instant)

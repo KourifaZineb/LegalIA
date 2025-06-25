@@ -52,7 +52,7 @@ public class AdminServiceApplication {
             admin.setPassword(passwordEncoder.encode("zineb12"));
             admin.setCreatedAt(now);
             admin.setLastLogin(now);
-            admin.setRole(Role.SUPER_ADMIN);
+            admin.setRole(Role.ADMIN);
 
             adminRepository.save(admin);
         };

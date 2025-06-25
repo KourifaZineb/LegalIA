@@ -1,6 +1,7 @@
 package com.chatbot.userservice;
 
 import com.chatbot.commonlibrary.enums.Language;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.enums.UserStatus;
 import com.chatbot.userservice.model.User;
 import com.chatbot.userservice.repository.UserRepository;
@@ -59,7 +60,7 @@ public class UserServiceApplication {
 							.phoneNumber("0639860383")
 							.createdAt(instant)
 							.lastLogin(instant)
-							.solde(800.00)
+							.role(Role.USER)
 							.build());
 		};
 	}

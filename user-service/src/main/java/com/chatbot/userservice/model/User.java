@@ -1,6 +1,7 @@
 package com.chatbot.userservice.model;
 
 import com.chatbot.commonlibrary.enums.Language;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.enums.UserStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -33,7 +34,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    private Double solde;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private Instant createdAt;
     private Instant lastLogin;

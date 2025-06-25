@@ -1,6 +1,7 @@
 package com.chatbot.userservice.services.servicesImpl;
 
 import com.chatbot.commonlibrary.dtos.UserDTO;
+import com.chatbot.commonlibrary.enums.Role;
 import com.chatbot.commonlibrary.exception.NotFoundException;
 import com.chatbot.userservice.mapper.UserMapper;
 import com.chatbot.userservice.model.User;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("hors de if");
         System.out.println("Mot de passe après encodage : " + dto.getPassword());
         User user = mapper.toEntity(dto);
+        dto.setRole(Role.USER);
         Instant now = Instant.now();
         user.setCreatedAt(now);
         user.setLastLogin(now);
@@ -69,8 +71,8 @@ public class UserServiceImpl implements UserService {
         if (dto.getStatus() != null) {
             existing.setStatus(dto.getStatus());
         }
-        if (dto.getSolde() != null) {
-            existing.setSolde(dto.getSolde());
+        if (dto.getRole() != null) {
+            existing.setRole(dto.getRole());
         }
         return mapper.toDto(repository.save(existing));
     }

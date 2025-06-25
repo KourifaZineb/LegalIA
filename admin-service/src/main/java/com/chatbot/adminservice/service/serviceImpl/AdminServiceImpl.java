@@ -57,10 +57,15 @@ public class AdminServiceImpl implements AdminService {
         Admin admin = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Admin not found"));
 
-        admin.setName(dto.getName());
-        admin.setEmail(dto.getEmail());
-        admin.setRole(dto.getRole());
-
+        if (dto.getName() != null) {
+            admin.setName(dto.getName());
+        }
+        if (dto.getEmail() != null) {
+            admin.setEmail(dto.getEmail());
+        }
+        if (dto.getRole() != null) {
+            admin.setRole(dto.getRole());
+        }
         return mapper.toDto(repository.save(admin));
     }
 
