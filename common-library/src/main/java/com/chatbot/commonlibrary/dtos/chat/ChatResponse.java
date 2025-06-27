@@ -8,6 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ChatResponse {
-    private String sessionId;
-    private String reply;
+    private String answer;
 }

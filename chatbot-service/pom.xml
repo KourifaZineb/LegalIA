@@ -15,7 +15,7 @@
 	<groupId>com.chatbot</groupId>
 	<artifactId>chatbot-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<description>Microservice Chatbot (NLP + RAG + persistance)</description>
+	<description>Microservice Chatbot (NLP + RAG + persistence)</description>
 
 	<properties>
 		<java.version>21</java.version>
@@ -26,7 +26,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Import Spring Cloud BOM -->
+			<!-- Spring Cloud BOM -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -38,14 +38,25 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- Common DTOs / user-service partagé -->
+		<!-- Votre common/user-service -->
 		<dependency>
 			<groupId>com.chatbot</groupId>
 			<artifactId>user-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<!-- Exclure toute version Hibernate 5.x transitivement ramenée -->
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate.common</groupId>
+					<artifactId>hibernate-commons-annotations</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
-		<!-- Spring Boot Starters -->
+		<!-- Starters Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -85,7 +96,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- PostgreSQL (runtime) -->
+		<!-- PostgreSQL driver -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -113,14 +124,14 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- Hibernate-Types pour text[] → String[] -->
+		<!-- Hibernate-Types pour text[] -->
 		<dependency>
 			<groupId>com.vladmihalcea</groupId>
 			<artifactId>hibernate-types-60</artifactId>
 			<version>2.21.0</version>
 		</dependency>
 
-		<!-- OpenAPI / Swagger UI -->
+		<!-- Springdoc / Swagger UI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -133,21 +144,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.6.15.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.6.15.Final</version>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-			<!-- Compiler pour Java 21 + annotation processing -->
+			<!-- Compiler Java 21 + annotation processing -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -169,7 +170,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Spring Boot Packaging -->
+			<!-- Spring Boot packaging -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

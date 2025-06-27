@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class ConversationsDTO {
     private String conversationId;
-    private Integer userId;
+    private Long userId;
     private String title;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

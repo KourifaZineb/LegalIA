@@ -12,12 +12,19 @@ import org.mapstruct.Mapping;
 )
 public interface ConversationMapper {
 
-    @Mapping(source = "user.userId", target = "userId")
-    @Mapping(source = "messages",        target = "messages")
+    /**
+     * mappe entity → DTO.
+     * userId est copié automatiquement (mêmes noms).
+     * la liste messages est gérée par MessageMapper.
+     */
+    @Mapping(source = "messages", target = "messages")
     ConversationsDTO toDto(Conversations entity);
 
+    /**
+     * mappe DTO → entity.
+     * on ignore la collection messages pour éviter les cycles.
+     */
     @InheritInverseConfiguration
-    @Mapping(target = "user",     ignore = true)  // on injectera l’utilisateur via le service
-    @Mapping(target = "messages", ignore = true)  // on gère l’ajout des messages séparément
+    @Mapping(target = "messages", ignore = true)
     Conversations toEntity(ConversationsDTO dto);
 }

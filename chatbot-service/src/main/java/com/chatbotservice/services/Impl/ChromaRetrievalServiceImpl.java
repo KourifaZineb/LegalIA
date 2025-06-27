@@ -1,4 +1,4 @@
-package com.chatbotservice.services.impl;
+package com.chatbotservice.services.Impl;
 
 import com.chatbotservice.services.ChromaRetrievalService;
 import org.springframework.beans.factory.annotation.Value;

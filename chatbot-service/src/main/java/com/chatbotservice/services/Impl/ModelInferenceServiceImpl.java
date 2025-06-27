@@ -22,18 +22,16 @@ public class ModelInferenceServiceImpl implements ModelInferenceService {
     }
 
     @Override
-    public String infer(String message, List<String> context, String language) {
-        // Prépare le payload JSON
-        Map<String,Object> payload = new HashMap<>();
-        payload.put("question", message);
-        payload.put("context",  context);
-        payload.put("language", language);
+    public String infer(String sessionId, String question) {
+        // On ne met que ce que Flask attend : sessionId + question
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("sessionId", sessionId);
+        payload.put("question",  question);
 
-        // Appel POST vers votre API Flask
         @SuppressWarnings("unchecked")
-        Map<String,Object> response = restTemplate.postForObject(apiUrl, payload, Map.class);
+        Map<String, Object> response = restTemplate.postForObject(apiUrl, payload, Map.class);
 
-        // Récupère la clé "answer" ou adaptez si votre API renvoie "reply"
+        // Adapté à la clé que votre API renvoie : "answer" ou "reply"
         return response.get("answer").toString();
     }
 }

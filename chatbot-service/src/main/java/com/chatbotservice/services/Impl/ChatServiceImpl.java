@@ -2,6 +2,8 @@ package com.chatbotservice.services.Impl;
 
 import com.chatbot.commonlibrary.dtos.chat.ChatRequest;
 import com.chatbot.commonlibrary.dtos.chat.ChatResponse;
+import com.chatbot.userservice.model.User;
+import com.chatbot.userservice.repository.UserRepository;
 import com.chatbotservice.model.Conversations;
 import com.chatbotservice.model.Messages;
 import com.chatbotservice.repository.ConversationRepository;
@@ -45,14 +47,15 @@ public class ChatServiceImpl implements ChatService {
         Conversations conversation = conversationRepository
                 .findById(request.getSessionId())
                 .orElseGet(() -> {
+                    // Utiliser .user(user) et non .userId(...)
                     Conversations conv = Conversations.builder()
                             .conversationId(request.getSessionId())
-                            .startTime(LocalDateTime.now())
-                            .isActive(true)
+                            .userId          (request.getUserId())
+                            .startTime     (LocalDateTime.now())
+                            .isActive      (true)
                             .build();
                     return conversationRepository.save(conv);
                 });
-
         // 2. Sauvegarder le message de l’utilisateur
         Messages userMsg = Messages.builder()
                 .messageId(UUID.randomUUID().toString())
@@ -70,7 +73,11 @@ public class ChatServiceImpl implements ChatService {
         List<String> context = chromaService.getContext(request.getMessage());
 
         // 5. Générer la réponse via inference
-        String reply = modelInferenceService.infer(request.getMessage(), context, language);
+        String reply = modelInferenceService.infer(
+                request.getSessionId(),
+                request.getMessage()
+        );
+
 
         // 6. Sauvegarder la réponse du bot
         Messages botMsg = Messages.builder()
@@ -89,8 +96,7 @@ public class ChatServiceImpl implements ChatService {
 
         // 8. Retourner la réponse
         return ChatResponse.builder()
-                .sessionId(request.getSessionId())
-                .reply(reply)
+                .answer(reply)
                 .build();
     }
 }

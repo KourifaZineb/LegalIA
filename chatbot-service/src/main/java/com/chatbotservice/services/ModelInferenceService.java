@@ -9,5 +9,5 @@ public interface ModelInferenceService {
      * @param context  contexte juridique
      * @param language code langue ISO
      */
-    String infer(String message, List<String> context, String language);
+    String infer(String sessionId, String question);
 }
