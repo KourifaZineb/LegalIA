@@ -15,11 +15,10 @@ import java.util.List;
 public interface MessageMapper {
 
     @Mapping(source = "conversation.conversationId", target = "conversationId")
-    @Mapping(source = "entities", target = "entities", qualifiedByName = "stringToList")
+
     MessagesDTO toDto(Messages entity);
 
     @Mapping(target = "conversation", ignore = true)
-    @Mapping(source = "entities", target = "entities", qualifiedByName = "listToString")
     Messages toEntity(MessagesDTO dto);
 
     /** Convertit la chaîne (csv, JSON, etc.) en liste */

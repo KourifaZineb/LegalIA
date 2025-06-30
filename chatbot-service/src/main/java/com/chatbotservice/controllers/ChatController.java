@@ -21,12 +21,6 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    /**
-     * Envoie un message au chatbot et récupère la réponse.
-     *
-     * @param request contient sessionId et message de l'utilisateur
-     * @return ChatResponse avec sessionId et reply du bot
-     */
     @PostMapping
     public ResponseEntity<ChatResponse> chat(@Validated @RequestBody ChatRequest request) {
         ChatResponse response = chatService.processMessage(request);

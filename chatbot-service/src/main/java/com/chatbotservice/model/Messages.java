@@ -1,9 +1,12 @@
 package com.chatbotservice.model;
 
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import org.hibernate.annotations.Type;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "messages")
@@ -12,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Messages {
 
     @Id
@@ -31,18 +35,10 @@ public class Messages {
 
     @Column(name = "isUserMessage", nullable = false)
     private boolean userMessage;
-
+/*
     @Column(name = "confidenceScore")
     private Float confidenceScore;
 
-    /**
-     * Pour mapper votre colonne PostgreSQL text[] :
-     * - Soit vous utilisez Hibernate Types (com.vladmihalcea:hibernate-types-52)
-     * - Soit vous remplacez par TEXT simple et un @Convert sur List<String>
-     */
-    @Column(name = "entities", columnDefinition = "text[]")
-    private String entities;
-
     @Column(name = "intent", length = 100)
-    private String intent;
+    private String intent;*/
 }

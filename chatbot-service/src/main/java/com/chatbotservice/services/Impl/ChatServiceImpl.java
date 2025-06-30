@@ -2,21 +2,17 @@ package com.chatbotservice.services.Impl;
 
 import com.chatbot.commonlibrary.dtos.chat.ChatRequest;
 import com.chatbot.commonlibrary.dtos.chat.ChatResponse;
-import com.chatbot.userservice.model.User;
-import com.chatbot.userservice.repository.UserRepository;
 import com.chatbotservice.model.Conversations;
 import com.chatbotservice.model.Messages;
 import com.chatbotservice.repository.ConversationRepository;
 import com.chatbotservice.repository.MessageRepository;
 import com.chatbotservice.services.ChatService;
-import com.chatbotservice.services.ChromaRetrievalService;
 import com.chatbotservice.services.LanguageDetectionService;
 import com.chatbotservice.services.ModelInferenceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,24 +21,23 @@ public class ChatServiceImpl implements ChatService {
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
     private final LanguageDetectionService languageDetectionService;
-    private final ChromaRetrievalService chromaService;
     private final ModelInferenceService modelInferenceService;
 
     public ChatServiceImpl(ConversationRepository conversationRepository,
                            MessageRepository messageRepository,
                            LanguageDetectionService languageDetectionService,
-                           ChromaRetrievalService chromaService,
                            ModelInferenceService modelInferenceService) {
         this.conversationRepository   = conversationRepository;
         this.messageRepository        = messageRepository;
         this.languageDetectionService = languageDetectionService;
-        this.chromaService       = chromaService;
         this.modelInferenceService    = modelInferenceService;
     }
 
     @Override
     @Transactional
     public ChatResponse processMessage(ChatRequest request) {
+        // 3. Détection de la langue
+        String language = languageDetectionService.detect(request.getQuestion());
         // 1. Récupérer ou créer la conversation
         Conversations conversation = conversationRepository
                 .findById(request.getSessionId())
@@ -51,6 +46,7 @@ public class ChatServiceImpl implements ChatService {
                     Conversations conv = Conversations.builder()
                             .conversationId(request.getSessionId())
                             .userId          (request.getUserId())
+                            .title("")
                             .startTime     (LocalDateTime.now())
                             .isActive      (true)
                             .build();
@@ -60,22 +56,18 @@ public class ChatServiceImpl implements ChatService {
         Messages userMsg = Messages.builder()
                 .messageId(UUID.randomUUID().toString())
                 .conversation(conversation)
-                .content(request.getMessage())
+                .content(request.getQuestion())
                 .timestamp(LocalDateTime.now())
                 .userMessage(true)
                 .build();
         messageRepository.save(userMsg);
 
-        // 3. Détection de la langue
-        String language = languageDetectionService.detect(request.getMessage());
 
-        // 4. Récupérer le contexte légal (RAG)
-        List<String> context = chromaService.getContext(request.getMessage());
 
         // 5. Générer la réponse via inference
         String reply = modelInferenceService.infer(
                 request.getSessionId(),
-                request.getMessage()
+                request.getQuestion()
         );
 
 
@@ -92,6 +84,7 @@ public class ChatServiceImpl implements ChatService {
         // 7. Mettre à jour la fin et l’état de la conversation
         conversation.setEndTime(LocalDateTime.now());
         conversation.setActive(true);
+        conversation.setLanguage(language);
         conversationRepository.save(conversation);
 
         // 8. Retourner la réponse

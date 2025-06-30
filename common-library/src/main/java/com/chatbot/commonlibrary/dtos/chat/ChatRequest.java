@@ -1,5 +1,6 @@
 package com.chatbot.commonlibrary.dtos.chat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -15,9 +16,8 @@ import java.util.List;
 public class ChatRequest {
     @NotNull
     private String sessionId;
-    @NotNull
     private Long userId;
     @NotNull
-    private String message;
+    private String question;
     private List<MultipartFile> attachments;
 }
