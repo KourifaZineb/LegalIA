@@ -1,5 +1,6 @@
 package com.chatbotservice.model;
 
+import com.chatbot.commonlibrary.enums.Language;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +31,8 @@ public class Conversations {
     private LocalDateTime endTime;
 
     @Column(name = "language", length = 10)
-    private String language;
+    @Enumerated(EnumType.STRING)
+    private Language language;
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;

@@ -35,10 +35,4 @@ public class Messages {
 
     @Column(name = "isUserMessage", nullable = false)
     private boolean userMessage;
-/*
-    @Column(name = "confidenceScore")
-    private Float confidenceScore;
-
-    @Column(name = "intent", length = 100)
-    private String intent;*/
 }

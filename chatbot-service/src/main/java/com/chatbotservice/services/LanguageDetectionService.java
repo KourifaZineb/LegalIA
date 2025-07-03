@@ -1,8 +1,10 @@
 package com.chatbotservice.services;
 
+import com.chatbot.commonlibrary.enums.Language;
+
 public interface LanguageDetectionService {
     /**
      * Détecte la langue ISO (ex. "fr", "ar", "en") du texte donné.
      */
-    String detect(String text);
+    Language detect(String text);
 }

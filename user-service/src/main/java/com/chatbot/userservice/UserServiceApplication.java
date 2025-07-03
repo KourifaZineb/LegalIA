@@ -56,7 +56,7 @@ public class UserServiceApplication {
 							.name("zineb")
 							.status(UserStatus.ACTIVE)
 							.password(passwordEncoder.encode("zineb12"))
-							.preferredLanguage(Language.FR)
+							.preferredLanguage(Language.français)
 							.phoneNumber("0639860383")
 							.createdAt(instant)
 							.lastLogin(instant)

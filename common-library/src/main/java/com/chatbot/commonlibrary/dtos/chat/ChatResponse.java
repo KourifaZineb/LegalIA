@@ -9,4 +9,5 @@ import lombok.*;
 @Builder
 public class ChatResponse {
     private String answer;
+    private String title;
 }

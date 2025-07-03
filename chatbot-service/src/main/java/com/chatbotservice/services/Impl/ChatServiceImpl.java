@@ -2,6 +2,8 @@ package com.chatbotservice.services.Impl;
 
 import com.chatbot.commonlibrary.dtos.chat.ChatRequest;
 import com.chatbot.commonlibrary.dtos.chat.ChatResponse;
+
+import com.chatbot.commonlibrary.enums.Language;
 import com.chatbotservice.model.Conversations;
 import com.chatbotservice.model.Messages;
 import com.chatbotservice.repository.ConversationRepository;
@@ -36,23 +38,23 @@ public class ChatServiceImpl implements ChatService {
     @Override
     @Transactional
     public ChatResponse processMessage(ChatRequest request) {
-        // 3. Détection de la langue
-        String language = languageDetectionService.detect(request.getQuestion());
-        // 1. Récupérer ou créer la conversation
+        // 1. Détection de la langue
+        Language language = languageDetectionService.detect(request.getQuestion());
+
+        // 2. Récupérer ou créer une conversation
         Conversations conversation = conversationRepository
                 .findById(request.getSessionId())
                 .orElseGet(() -> {
-                    // Utiliser .user(user) et non .userId(...)
                     Conversations conv = Conversations.builder()
                             .conversationId(request.getSessionId())
-                            .userId          (request.getUserId())
-                            .title("")
-                            .startTime     (LocalDateTime.now())
-                            .isActive      (true)
+                            .userId(request.getUserId())
+                            .startTime(LocalDateTime.now())
+                            .isActive(true)
                             .build();
                     return conversationRepository.save(conv);
                 });
-        // 2. Sauvegarder le message de l’utilisateur
+
+        // 3. Sauvegarder le message de l’utilisateur
         Messages userMsg = Messages.builder()
                 .messageId(UUID.randomUUID().toString())
                 .conversation(conversation)
@@ -62,16 +64,15 @@ public class ChatServiceImpl implements ChatService {
                 .build();
         messageRepository.save(userMsg);
 
-
-
-        // 5. Générer la réponse via inference
-        String reply = modelInferenceService.infer(
+        // 4. Appeler le modèle NLP
+        ChatResponse modelResponse = modelInferenceService.infer(
                 request.getSessionId(),
                 request.getQuestion()
         );
+        String reply = modelResponse.getAnswer();
+        String title = modelResponse.getTitle();
 
-
-        // 6. Sauvegarder la réponse du bot
+        // 5. Sauvegarder la réponse du bot
         Messages botMsg = Messages.builder()
                 .messageId(UUID.randomUUID().toString())
                 .conversation(conversation)
@@ -81,15 +82,19 @@ public class ChatServiceImpl implements ChatService {
                 .build();
         messageRepository.save(botMsg);
 
-        // 7. Mettre à jour la fin et l’état de la conversation
+        // 6. Mettre à jour la conversation
         conversation.setEndTime(LocalDateTime.now());
         conversation.setActive(true);
         conversation.setLanguage(language);
+        if (conversation.getTitle() == null || conversation.getTitle().isEmpty()) {
+            conversation.setTitle(title); // Mettre à jour seulement si vide
+        }
         conversationRepository.save(conversation);
 
-        // 8. Retourner la réponse
+        // 7. Retourner la réponse
         return ChatResponse.builder()
                 .answer(reply)
+                .title(title)
                 .build();
     }
 }

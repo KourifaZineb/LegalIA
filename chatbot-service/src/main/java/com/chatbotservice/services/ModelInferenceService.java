@@ -1,8 +1,10 @@
 package com.chatbotservice.services;
 
+import com.chatbot.commonlibrary.dtos.chat.ChatResponse;
+
 import java.util.List;
 
 public interface ModelInferenceService {
 
-    String infer(String sessionId, String question);
+    ChatResponse infer(String sessionId, String question);
 }
