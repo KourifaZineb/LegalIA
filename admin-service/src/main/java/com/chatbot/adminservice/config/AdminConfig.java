@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -35,6 +36,7 @@ public class AdminConfig {
                         }
                 };
         }
+
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
@@ -45,7 +47,6 @@ public class AdminConfig {
                                         "/swagger-ui.html",
                                         "/v3/api-docs/**",
                                         "/api-docs/**",
-                                        "/h2-console/**",
                                         "/actuator/**"
                                 ).permitAll()
                                 .anyRequest().permitAll()

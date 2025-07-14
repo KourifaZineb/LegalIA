@@ -19,7 +19,7 @@ public class Conversations {
 
     /** Plus de ManyToOne, juste l’ID de l’utilisateur */
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column(name = "title", length = 255)
     private String title;

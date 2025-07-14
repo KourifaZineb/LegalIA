@@ -9,22 +9,28 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "uuid")
+    private UUID id;
 
-    private String name;
+    @Column(unique=true)
+    private String keycloakId;
+
+    private String firstName;
+    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false) // ✅ Très important !
-    private String password;
+    //@Column(nullable = false)  //✅ Très important !
+    /*private String password;*/
 
     private String phoneNumber;
 

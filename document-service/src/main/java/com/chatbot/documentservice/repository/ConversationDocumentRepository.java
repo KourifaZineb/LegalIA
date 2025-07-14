@@ -12,5 +12,5 @@ public interface ConversationDocumentRepository extends MongoRepository<Conversa
     /**
      * Récupère tous les documents d'une conversation
      */
-    List<ConversationDocument> findByConversationId(String conversationId);
+    //List<ConversationDocument> findByConversationId(String conversationId);
 }

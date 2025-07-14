@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ModelInferenceService {
 
-    ChatResponse infer(String sessionId, String question);
+    ChatResponse infer(String session_id, String question);
 }

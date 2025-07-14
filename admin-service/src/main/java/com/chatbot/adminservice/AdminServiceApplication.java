@@ -41,7 +41,7 @@ public class AdminServiceApplication {
         );
     }
 
-    @Bean
+    /*@Bean
     CommandLineRunner commandLineRunner(AdminRepository adminRepository) {
         return args -> {
             Instant now = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
@@ -56,5 +56,5 @@ public class AdminServiceApplication {
 
             adminRepository.save(admin);
         };
-    }
+    }*/
 }

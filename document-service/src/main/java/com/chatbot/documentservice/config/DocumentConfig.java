@@ -28,7 +28,7 @@ public class DocumentConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
+                registry.addMapping("/api/**")
                         .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
@@ -46,7 +46,6 @@ public class DocumentConfig {
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
                                 "/api-docs/**",
-                                "/h2-console/**",
                                 "/actuator/**"
                         ).permitAll()
                         .anyRequest().permitAll()

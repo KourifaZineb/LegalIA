@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,10 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class UserDTO {
-    private Long id;
-    private String name;
+    private UUID id;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String password; // ✅ Ce champ est obligatoire !
+    //private String password; // ✅ Ce champ est obligatoire !
     private String phoneNumber;
     private Language preferredLanguage;
     private UserStatus status;

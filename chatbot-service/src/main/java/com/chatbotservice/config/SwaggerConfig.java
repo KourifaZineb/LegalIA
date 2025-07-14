@@ -10,8 +10,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(new Info()
-                .title("Chat bot Service API")
+                .title("Document Service API")
                 .version("1.0")
-                .description("Documentation des APIs du Chat bot Service"));
+                .description("Documentation des APIs du Document Service"));
     }
 }

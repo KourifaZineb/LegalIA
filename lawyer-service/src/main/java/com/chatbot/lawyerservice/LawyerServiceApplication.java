@@ -59,7 +59,7 @@ public class LawyerServiceApplication {
                     .password(passwordEncoder.encode("salwasalwa"))
                     .adresse("Casablanca, Morocco")
                     .specialization(Specialization.FAMILY_LAW)
-                    .languages(Language.AR)
+                    .languages(Language.arabe)
                     .role(Role.LAWYER)
                     .status(LawyerStatus.AVAILABLE)
                     .createdAt(instant)

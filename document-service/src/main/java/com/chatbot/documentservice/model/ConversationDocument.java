@@ -14,12 +14,14 @@ public class ConversationDocument {
     @Id
     private String documentId;
 
-    /** Référence à l’ID de la conversation stockée (Postgres ou autre) */
+    /** Référence à l’ID de la conversation stockée (dans Postgres) */
     private String conversationId;
 
     private String fileName;
     private String fileType;
     private String filePath;
     private LocalDateTime uploadDate;
+
+    /** Texte extrait du document (utilisé pour l’analyse NLP) */
     private String extractedText;
 }

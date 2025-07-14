@@ -46,7 +46,7 @@ public class UserServiceApplication {
 		);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner commandLineRunner(UserRepository userRepository){
 		return args -> {
 			Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
@@ -63,5 +63,5 @@ public class UserServiceApplication {
 							.role(Role.USER)
 							.build());
 		};
-	}
+	}*/
 }
