@@ -6,16 +6,20 @@ import lombok.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LawyerConnectionDTO {
-    private Long connectionId;
-    private Long userId;
+    private Long id;
+    private String userId;
     private Long lawyerId;
-    private Instant requestDate;
     private ConnectionStatus status;
     private String caseDescription;
     private String objet;
-
-    private UserDTO user;       // ✅ pour enrichissement
-    private LawyerDTO lawyer;   // ✅ pour enrichissement
+    private Instant requestDate;
+    private Instant responseDate;
+    private String message; // Optional message from user
+    private UserDTO userInfo;
+    private LawyerDTO lawyerInfo;
 }

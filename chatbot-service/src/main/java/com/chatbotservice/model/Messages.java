@@ -1,12 +1,9 @@
 package com.chatbotservice.model;
 
-import com.vladmihalcea.hibernate.type.array.StringArrayType;
-import org.hibernate.annotations.Type;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "messages")
@@ -15,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class Messages {
 
     @Id

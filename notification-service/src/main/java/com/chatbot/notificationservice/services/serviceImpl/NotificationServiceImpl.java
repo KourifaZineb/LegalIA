@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationDTO> getUserNotifications(Long userId) {
+    public List<NotificationDTO> getUserNotifications(String userId) {
         return repository.findByUserId(userId).stream().map(notification -> enrich(mapper.toDto(notification))).toList();
     }
 

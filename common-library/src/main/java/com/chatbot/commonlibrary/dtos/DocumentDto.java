@@ -10,4 +10,5 @@ public class DocumentDto {
     private String fileName;
     private String fileType;
     private String fileContent;
+    private String mimeType;
 }

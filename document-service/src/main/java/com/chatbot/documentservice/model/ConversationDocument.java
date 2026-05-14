@@ -1,27 +1,50 @@
 package com.chatbot.documentservice.model;
 
-import com.chatbotservice.model.Conversations;
+import com.chatbot.commonlibrary.enums.DocumentStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDateTime;
 
-@Document(collection = "conversation_documents")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Entity
+@Table(name = "conversation_documents")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConversationDocument {
 
     @Id
+    @Column(name = "document_id")
     private String documentId;
 
-    /** Référence à l’ID de la conversation stockée (dans Postgres) */
+    @Column(name = "conversation_id", nullable = false)
     private String conversationId;
 
+    @Column(name = "file_name", nullable = false)
     private String fileName;
+
+    @Column(name = "file_type")
     private String fileType;
-    private String filePath;
+
+    @Column(name = "mime_type")
+    private String mimeType;
+
+    @Column(name = "file_size")
+    private Long fileSize;
+
+    @Column(name = "upload_date")
     private LocalDateTime uploadDate;
 
-    /** Texte extrait du document (utilisé pour l’analyse NLP) */
+    @Column(name = "firebase_storage_path", nullable = false)
+    private String firebaseStoragePath;
+
+    @Column(name = "firebase_bucket")
+    private String firebaseBucket;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private DocumentStatus status;
+
+    @Column(name = "extracted_text", columnDefinition = "TEXT")
     private String extractedText;
 }

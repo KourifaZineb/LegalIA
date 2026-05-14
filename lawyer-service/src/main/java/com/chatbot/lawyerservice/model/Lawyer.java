@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -59,4 +60,10 @@ public class Lawyer {
 
     @Column(name = "last_login")
     private Instant lastLogin;
+
+    @Column(name = "fcm_token", length = 500)
+    private String fcmToken;
+
+    @Column(name = "fcm_token_updated_at")
+    private LocalDateTime fcmTokenUpdatedAt;
 }

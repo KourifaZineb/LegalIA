@@ -47,19 +47,19 @@ public class NotificationServiceApplication {
         );
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(NotificationRepository notificationRepository) {
-        return args -> {
-            Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
-
-            notificationRepository.save(Notification.builder()
-                            .content("hello i'm new notification !!!!")
-                            .notificationType(NotificationType.SYSTEM_NOTIFICATION)
-                            .userId(1L)
-                            .lawyerId(1L)
-                            .timestamp(instant)
-                            .read(false)
-                    .build());
-        };
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(NotificationRepository notificationRepository) {
+//        return args -> {
+//            Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+//
+//            notificationRepository.save(Notification.builder()
+//                            .content("hello i'm new notification !!!!")
+//                            .notificationType(NotificationType.SYSTEM_NOTIFICATION)
+//                            .userId(1L)
+//                            .lawyerId(1L)
+//                            .timestamp(instant)
+//                            .read(false)
+//                    .build());
+//        };
+//    }
 }

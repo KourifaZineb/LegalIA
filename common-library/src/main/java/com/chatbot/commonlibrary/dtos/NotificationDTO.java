@@ -5,14 +5,18 @@ import lombok.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NotificationDTO {
-    private Long id;
-    private Long userId;
+    private String title;
+    private String message;
+    private String fcmToken;
+    private String type;
+    private Long connectionId;
+    private String userId;
     private Long lawyerId;
-    private String content;
-    private Instant timestamp;
-    private boolean read;
-    private NotificationType notificationType;
+
     private UserDTO userDTO;
 }

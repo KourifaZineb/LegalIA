@@ -26,4 +26,5 @@ public class UserDTO {
     private Role role;
     private Instant createdAt;
     private Instant lastLogin;
+    private String fcmToken;
 }

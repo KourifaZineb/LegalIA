@@ -48,7 +48,7 @@ public class LawyerServiceApplication {
         );
     }
 
-    @Bean
+    /*@Bean
     CommandLineRunner commandLineRunner(LawyerRepository lawyerRepository){
         return args -> {
             Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
@@ -66,5 +66,5 @@ public class LawyerServiceApplication {
                     .lastLogin(instant)
                     .build());
         };
-    }
+    }*/
 }

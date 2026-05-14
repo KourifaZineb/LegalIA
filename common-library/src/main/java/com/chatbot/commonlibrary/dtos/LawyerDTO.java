@@ -23,4 +23,5 @@ public class LawyerDTO {
     private LawyerStatus status;
     private Instant createdAt;
     private Instant lastLogin;
+    private String fcmToken;
 }

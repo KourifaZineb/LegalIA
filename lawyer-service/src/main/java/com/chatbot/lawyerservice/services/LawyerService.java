@@ -13,5 +13,8 @@ public interface LawyerService {
     List<LawyerDTO> getLawyersByStatus(LawyerStatus status);
     LawyerDTO updateLawyer(Long id, LawyerDTO dto);
     void deleteLawyer(Long id);
+    void updateFCMToken(Long lawyerId, String fcmToken);
+    void removeFCMToken(Long lawyerId);
+    LawyerDTO getLawyerByEmail(String email);
 
 }

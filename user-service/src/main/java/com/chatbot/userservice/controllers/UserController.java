@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService service;
 
@@ -34,7 +34,7 @@ public class UserController {
         return service.getAllUsers();
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}")
     public UserDTO update(@PathVariable UUID id, @RequestBody UserDTO dto) {
         return service.updateUser(id, dto);
     }

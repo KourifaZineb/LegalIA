@@ -52,17 +52,17 @@ LawyerConnectorServiceApplication {
         );
     }
 
-    @Bean
-    CommandLineRunner commandLineRunner(ConnectionRepository connectionRepository){
-        return args -> {
-            Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
-            connectionRepository.save(Connection.builder()
-                    .lawyerId(1L)
-                    .userId(1L)
-                    .caseDescription("Need help with a contract dispute")
-                    .requestDate(instant)
-                    .status(ConnectionStatus.ACCEPTED)
-                    .build());
-        };
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(ConnectionRepository connectionRepository){
+//        return args -> {
+//            Instant instant = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+//            connectionRepository.save(Connection.builder()
+//                    .lawyerId(1L)
+//                    .userId(1L)
+//                    .caseDescription("Need help with a contract dispute")
+//                    .requestDate(instant)
+//                    .status(ConnectionStatus.ACCEPTED)
+//                    .build());
+//        };
+//    }
 }

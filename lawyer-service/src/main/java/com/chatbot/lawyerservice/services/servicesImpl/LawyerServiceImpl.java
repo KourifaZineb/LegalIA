@@ -9,6 +9,7 @@ import com.chatbot.lawyerservice.repository.LawyerRepository;
 import com.chatbot.lawyerservice.services.LawyerService;
 import com.chatbot.lawyerservice.model.Lawyer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class LawyerServiceImpl implements LawyerService {
     private final LawyerRepository repository;
@@ -38,6 +40,13 @@ public class LawyerServiceImpl implements LawyerService {
     @Override
     public LawyerDTO getLawyerById(Long id) {
         return repository.findById(id)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Lawyer not found"));
+    }
+
+    @Override
+    public LawyerDTO getLawyerByEmail(String email) {
+        return repository.findByEmail(email)
                 .map(mapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Lawyer not found"));
     }
@@ -72,5 +81,26 @@ public class LawyerServiceImpl implements LawyerService {
     @Override
     public void deleteLawyer(Long id) {
         repository.deleteById(id);
+    }
+
+    public void updateFCMToken(Long lawyerId, String fcmToken) {
+        Lawyer lawyer = repository.findById(lawyerId)
+                .orElseThrow(() -> new RuntimeException("Lawyer not found"));
+
+        lawyer.setFcmToken(fcmToken);
+        repository.save(lawyer);
+
+        log.info("FCM token updated for lawyer: {}", lawyerId);
+    }
+
+    public void removeFCMToken(Long lawyerId) {
+        Lawyer lawyer = repository.findById(lawyerId)
+                .orElseThrow(() -> new RuntimeException("Lawyer not found"));
+
+        lawyer.setFcmToken(null);
+        lawyer.setFcmTokenUpdatedAt(null);
+        repository.save(lawyer);
+
+        log.info("FCM token removed for lawyer: {}", lawyerId);
     }
 }

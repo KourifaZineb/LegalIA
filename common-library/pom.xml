@@ -84,6 +84,11 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>${swagger.annotations.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 

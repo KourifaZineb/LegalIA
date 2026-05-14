@@ -24,7 +24,7 @@ public class NotificationController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<NotificationDTO> getByUser(@PathVariable Long userId) {
+    public List<NotificationDTO> getByUser(@PathVariable String userId) {
         return service.getUserNotifications(userId);
     }
 
